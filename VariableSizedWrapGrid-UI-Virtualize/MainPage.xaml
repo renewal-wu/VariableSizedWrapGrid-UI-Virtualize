@@ -13,7 +13,7 @@
         <control:VirtualizedVariableSizedWrapGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.SourceCollection}" ItemWidth="50" ItemHeight="50">
             <control:VirtualizedVariableSizedWrapGrid.ItemTemplate>
                 <DataTemplate x:DataType="model:TestData">
-                    <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" Background="{x:Bind Background}">
+                    <Grid Background="{x:Bind Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <TextBlock Foreground="White" Text="{x:Bind Title}"/>
                     </Grid>
                 </DataTemplate>

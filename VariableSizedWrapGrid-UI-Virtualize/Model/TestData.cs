@@ -11,7 +11,7 @@ namespace VariableSizedWrapGrid_UI_Virtualize.Model
     {
         public string Title { get; set; }
         public Brush Background { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int ColumnCount { get; set; }
+        public int RowCount { get; set; }
     }
 }

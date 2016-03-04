@@ -28,15 +28,15 @@ namespace VariableSizedWrapGrid_UI_Virtualize.ViewModel
                 var g = random.Next(0, 255);
                 var b = random.Next(0, 255);
 
-                var width = random.Next(0, 200);
-                var height = random.Next(0, 100);
+                var columnCount = random.Next(1, 3);
+                var rowCount = random.Next(1, 3);
 
                 SourceCollection.Add(new TestData()
                 {
                     Title = i.ToString(),
                     Background = new SolidColorBrush(Color.FromArgb(0xFF, (byte)r, (byte)g, (byte)b)),
-                    Width = width,
-                    Height = height
+                    ColumnCount = columnCount,
+                    RowCount = rowCount
                 });
             }
         }

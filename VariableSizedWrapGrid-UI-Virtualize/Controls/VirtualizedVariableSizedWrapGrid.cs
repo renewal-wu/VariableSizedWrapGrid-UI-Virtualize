@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VariableSizedWrapGrid_UI_Virtualize.Model;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -156,14 +157,36 @@ namespace VariableSizedWrapGrid_UI_Virtualize.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _panel = this.GetTemplateChild("LayoutArea") as Panel;
+            _panel = this.GetTemplateChild("LayoutArea") as Canvas;
             _scrollViewer = this.GetTemplateChild("Scroll") as ScrollViewer;
-            if (ItemsSource != null)
-                GenerateItemContainers(ItemsSource);
+
+            if (_panel != null)
+            {
+                _panel.Loaded -= _panel_Loaded;
+                _panel.Loaded += _panel_Loaded;
+
+                _panel.SizeChanged -= _panel_SizeChanged;
+                _panel.SizeChanged += _panel_SizeChanged;
+            }
+
+            if (this._scrollViewer != null)
+            {
+                this._scrollViewer.ViewChanged -= _scrollViewer_ViewChanged;
+                this._scrollViewer.ViewChanged += _scrollViewer_ViewChanged;
+            }
+
+            LoadItemsSource();
         }
+
         #endregion
 
         #region Private voids
+        private void LoadItemsSource()
+        {
+            if (ItemsSource != null)
+                GenerateItemContainers(ItemsSource);
+        }
+
         private void ClearItems()
         {
             if (_panel == null)
@@ -190,6 +213,13 @@ namespace VariableSizedWrapGrid_UI_Virtualize.Controls
                 {
                     ItemContainer container = new ItemContainer();
                     container.DataItem = item;
+
+                    var testData = item as TestData;
+                    if (testData != null)
+                    {
+                        container.ColumnSpan = testData.ColumnCount;
+                        container.RowSpan = testData.RowCount;
+                    }
 
                     if (OnCalculatingItemSize != null)
                         OnCalculatingItemSize(container);
@@ -315,17 +345,18 @@ namespace VariableSizedWrapGrid_UI_Virtualize.Controls
                 _moreDataRequested = false;
 
             ClearItems();
-            GenerateItemContainers(this.ItemsSource);
+            LoadItemsSource();
             UpdateView();
         }
 
         void VirtualizedVariableSizedWrapGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this._scrollViewer != null)
-            {
-                this._scrollViewer.ViewChanged += _scrollViewer_ViewChanged;
-            }
-            _panel.SizeChanged += _panel_SizeChanged;
+
+        }
+
+        private void _panel_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadItemsSource();
         }
 
         void _scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -347,7 +378,7 @@ namespace VariableSizedWrapGrid_UI_Virtualize.Controls
             if (_maxRows != currentMaxRows) //Orientation probably changed, control got higher
             {
                 ClearItems();
-                GenerateItemContainers(this.ItemsSource);
+                LoadItemsSource();
                 UpdateView();
                 return;
             }

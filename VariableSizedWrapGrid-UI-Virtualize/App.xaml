@@ -13,7 +13,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:VirtualizedVariableSizedWrapGrid">
                         <ScrollViewer x:Name="Scroll" ZoomMode="Disabled" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                            <Grid x:Name="LayoutArea"/>
+                            <Canvas x:Name="LayoutArea"/>
                         </ScrollViewer>
                     </ControlTemplate>
                 </Setter.Value>
