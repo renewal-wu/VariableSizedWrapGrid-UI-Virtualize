@@ -5,9 +5,19 @@
     xmlns:local="using:VariableSizedWrapGrid_UI_Virtualize"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:VariableSizedWrapGrid_UI_Virtualize.Model"
+    xmlns:control="using:VariableSizedWrapGrid_UI_Virtualize.Controls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="White">
+        <control:VirtualizedVariableSizedWrapGrid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{x:Bind ViewModel.SourceCollection}" ItemWidth="50" ItemHeight="50">
+            <control:VirtualizedVariableSizedWrapGrid.ItemTemplate>
+                <DataTemplate x:DataType="model:TestData">
+                    <Grid Width="{x:Bind Width}" Height="{x:Bind Height}" Background="{x:Bind Background}">
+                        <TextBlock Foreground="White" Text="{x:Bind Title}"/>
+                    </Grid>
+                </DataTemplate>
+            </control:VirtualizedVariableSizedWrapGrid.ItemTemplate>
+        </control:VirtualizedVariableSizedWrapGrid>
     </Grid>
 </Page>

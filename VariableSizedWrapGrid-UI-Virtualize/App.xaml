@@ -3,6 +3,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:VariableSizedWrapGrid_UI_Virtualize"
+    xmlns:controls="using:VariableSizedWrapGrid_UI_Virtualize.Controls"
     RequestedTheme="Light">
 
+    <Application.Resources>
+
+        <Style TargetType="controls:VirtualizedVariableSizedWrapGrid">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:VirtualizedVariableSizedWrapGrid">
+                        <ScrollViewer x:Name="Scroll" ZoomMode="Disabled" HorizontalScrollMode="Auto" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                            <Grid x:Name="LayoutArea"/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
 </Application>
